@@ -1,12 +1,12 @@
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  title: 'Laravel missing docs',
+  author: 'Jaroslav Klimcik',
+  headerTitle: 'Laravel missing docs',
+  description: 'List of undocumented Laravel methods',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://jerryklimcik.github.io/laravel-missing-docs',
+  siteRepo: 'https://github.com/jerryklimcik/laravel-missing-docs',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
