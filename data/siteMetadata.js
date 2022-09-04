@@ -7,7 +7,7 @@ const siteMetadata = {
   theme: 'system', // system, dark or light
   siteUrl: 'https://jerryklimcik.github.io/laravel-missing-docs',
   siteRepo: 'https://github.com/jerryklimcik/laravel-missing-docs',
-  siteLogo: '/static/images/logo.png',
+  siteLogo: '/static/images/laravel-logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
   email: 'address@yoursite.com',
