@@ -36,6 +36,7 @@ export async function getStaticProps({ params }) {
 
 export default function Docs({ post, prev, next }) {
   const { mdxSource, toc, frontMatter } = post
+  let test = 'test'
 
   return (
     <>
