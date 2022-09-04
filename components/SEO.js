@@ -14,11 +14,6 @@ const CommonSEO = ({ title, description, ogType, ogImage, canonicalUrl }) => {
       <meta property="og:site_name" content={siteMetadata.title} />
       <meta property="og:description" content={description} />
       <meta property="og:title" content={title} />
-      {ogImage.constructor.name === 'Array' ? (
-        ogImage.map(({ url }) => <meta property="og:image" content={url} key={url} />)
-      ) : (
-        <meta property="og:image" content={ogImage} key={ogImage} />
-      )}
       <link
         rel="canonical"
         href={canonicalUrl ? canonicalUrl : `${siteMetadata.siteUrl}${router.asPath}`}
@@ -28,16 +23,14 @@ const CommonSEO = ({ title, description, ogType, ogImage, canonicalUrl }) => {
 }
 
 export const PageSEO = ({ title, description }) => {
-  const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
-  return <CommonSEO title={title} description={description} ogType="website" ogImage={ogImageUrl} />
+  return <CommonSEO title={title} description={description} ogType="website" />
 }
 
 export const TagSEO = ({ title, description }) => {
-  const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const router = useRouter()
   return (
     <>
-      <CommonSEO title={title} description={description} ogType="website" ogImage={ogImageUrl} />
+      <CommonSEO title={title} description={description} ogType="website" />
       <Head>
         <link
           rel="alternate"
@@ -63,19 +56,6 @@ export const BlogSEO = ({
   const router = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
-  let imagesArr =
-    images.length === 0
-      ? [siteMetadata.socialBanner]
-      : typeof images === 'string'
-      ? [images]
-      : images
-
-  const featuredImages = imagesArr.map((img) => {
-    return {
-      '@type': 'ImageObject',
-      url: img.includes('http') ? img : siteMetadata.siteUrl + img,
-    }
-  })
 
   let authorList
   if (authorDetails) {
@@ -100,7 +80,6 @@ export const BlogSEO = ({
       '@id': url,
     },
     headline: title,
-    image: featuredImages,
     datePublished: publishedAt,
     dateModified: modifiedAt,
     author: authorList,
@@ -117,13 +96,7 @@ export const BlogSEO = ({
 
   return (
     <>
-      <CommonSEO
-        title={title}
-        description={summary}
-        ogType="article"
-        ogImage={featuredImages}
-        canonicalUrl={canonicalUrl}
-      />
+      <CommonSEO title={title} description={summary} ogType="article" canonicalUrl={canonicalUrl} />
       <Head>
         {date && <meta property="article:published_time" content={publishedAt} />}
         {lastmod && <meta property="article:modified_time" content={modifiedAt} />}
