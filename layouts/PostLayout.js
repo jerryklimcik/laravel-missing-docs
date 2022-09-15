@@ -17,7 +17,7 @@ const postDateTemplate = {
 }
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
-  const { slug, fileName, date, title, images, tags } = frontMatter
+  const { slug, fileName, date, title, images, tags, version, source } = frontMatter
 
   return (
     <SectionContainer>
@@ -52,6 +52,20 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
           >
             <div>
               <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
+                <div className="py-4 xl:py-8">
+                  <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    Since version
+                  </h2>
+                  <div className="flex flex-wrap text-gray-600 dark:text-gray-300">{version}</div>
+                </div>
+                <div className="py-4 xl:py-8">
+                  <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    Source
+                  </h2>
+                  <div className="flex flex-wrap text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                    <Link href={source}>Link</Link>
+                  </div>
+                </div>
                 {tags && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
@@ -69,7 +83,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                     {prev && (
                       <div>
                         <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          Previous Article
+                          Previous doc
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/docs/${prev.slug}`}>{prev.title}</Link>
@@ -79,7 +93,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                     {next && (
                       <div>
                         <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          Next Article
+                          Next doc
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/docs/${next.slug}`}>{next.title}</Link>

@@ -1,24 +1,6 @@
 const fs = require('fs')
-const path = require('path')
 const inquirer = require('inquirer')
 const dedent = require('dedent')
-
-const root = process.cwd()
-
-const getAuthors = () => {
-  const authorPath = path.join(root, 'data', 'authors')
-  const authorList = fs.readdirSync(authorPath).map((filename) => path.parse(filename).name)
-  return authorList
-}
-
-const getLayouts = () => {
-  const layoutPath = path.join(root, 'layouts')
-  const layoutList = fs
-    .readdirSync(layoutPath)
-    .map((filename) => path.parse(filename).name)
-    .filter((file) => file.toLowerCase().includes('post'))
-  return layoutList
-}
 
 const genFrontMatter = (answers) => {
   let d = new Date()
@@ -30,22 +12,17 @@ const genFrontMatter = (answers) => {
   const tagArray = answers.tags.split(',')
   tagArray.forEach((tag, index) => (tagArray[index] = tag.trim()))
   const tags = "'" + tagArray.join("','") + "'"
-  const authorArray = answers.authors.length > 0 ? "'" + answers.authors.join("','") + "'" : ''
 
   let frontMatter = dedent`---
   title: ${answers.title ? answers.title : 'Untitled'}
   date: '${date}'
+  version: ${answers.version ? answers.version : ''}
+  link: ${answers.link ? answers.link : ''}
   tags: [${answers.tags ? tags : ''}]
-  draft: ${answers.draft === 'yes' ? true : false}
+  draft: ${answers.draft === 'yes'}
   summary: ${answers.summary ? answers.summary : ' '}
   images: []
-  layout: ${answers.layout}
-  canonicalUrl: ${answers.canonicalUrl}
   `
-
-  if (answers.authors.length > 0) {
-    frontMatter = frontMatter + '\n' + `authors: [${authorArray}]`
-  }
 
   frontMatter = frontMatter + '\n---'
 
@@ -66,10 +43,14 @@ inquirer
       choices: ['mdx', 'md'],
     },
     {
-      name: 'authors',
-      message: 'Choose authors:',
-      type: 'checkbox',
-      choices: getAuthors,
+      name: 'version',
+      message: 'Enter version since method is in Laravel:',
+      type: 'input',
+    },
+    {
+      name: 'link',
+      message: 'Enter link with Laravel pull request of method',
+      type: 'input',
     },
     {
       name: 'summary',
@@ -85,17 +66,6 @@ inquirer
     {
       name: 'tags',
       message: 'Any Tags? Separate them with , or leave empty if no tags.',
-      type: 'input',
-    },
-    {
-      name: 'layout',
-      message: 'Select layout',
-      type: 'list',
-      choices: getLayouts,
-    },
-    {
-      name: 'canonicalUrl',
-      message: 'Enter canonical url:',
       type: 'input',
     },
   ])
